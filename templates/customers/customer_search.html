@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Buscar Clientes{% endblock %}
+
+{% block content %}
+<h1>Buscar Clientes</h1>
+<form method="get">
+    <label for="q">Sobrenome:</label>
+    <input type="text" name="q" id="q" value="{{ query }}">
+    <button type="submit">Buscar</button>
+</form>
+<p><a href="{% url 'list_customers' %}"><button>Voltar</button></a></p>
+{% if query %}
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>CPF</th>
+            <th>Telefone</th>
+            <th>E-mail</th>
+            <th>Mensalista</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for customer in customers %}
+        <tr>
+            <td>{{ customer.id }}</td>
+            <td>{{ customer.first_name }}</td>
+            <td>{{ customer.last_name }}</td>
+            <td>{{ customer.cpf }}</td>
+            <td>{{ customer.phone }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.is_monthly|yesno:"Sim,Não" }}</td>
+            <td>
+                <a href="{% url 'edit_customer' customer.pk %}"><button>Editar</button></a>
+                <a href="{% url 'delete_customer' customer.pk %}"><button>Excluir</button></a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8">Nenhum cliente encontrado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Estacionamento{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'home' %}"><button>Home</button></a>
+            <a href="{% url 'list_customers' %}"><button>Clientes</button></a>
+            <a href="{% url 'list_parking_spots' %}"><button>Vagas</button></a>
+            <a href="{% url 'list_items' %}"><button>Caixa</button></a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

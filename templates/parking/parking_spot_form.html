@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<form method="post">
+    {% csrf_token %}
+    <table border="1">
+        {{ form.as_table }}
+    </table>
+    <button type="submit">Salvar</button>
+    <a href="{% url 'list_parking_spots' %}"><button type="button">Cancelar</button></a>
+</form>
+{% endblock %}

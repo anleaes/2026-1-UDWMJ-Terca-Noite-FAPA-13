@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Excluir Assinatura{% endblock %}
+
+{% block content %}
+<h1>Excluir Assinatura</h1>
+<p>Deseja excluir a assinatura de {{ subscription.customer }}?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar</button>
+    <a href="{% url 'list_subscriptions' %}"><button type="button">Cancelar</button></a>
+</form>
+{% endblock %}

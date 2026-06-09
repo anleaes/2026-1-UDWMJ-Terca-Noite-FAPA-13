@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Assinaturas{% endblock %}
+
+{% block content %}
+<h1>Assinaturas</h1>
+<p>
+    <a href="{% url 'add_subscription' %}"><button>Adicionar Assinatura</button></a>
+    <a href="{% url 'list_parking_spots' %}"><button>Voltar para Vagas</button></a>
+</p>
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Vaga</th>
+            <th>Início</th>
+            <th>Término</th>
+            <th>Mensalidade</th>
+            <th>Ativa</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for subscription in subscriptions %}
+        <tr>
+            <td>{{ subscription.id }}</td>
+            <td>{{ subscription.customer }}</td>
+            <td>{{ subscription.parking_spot }}</td>
+            <td>{{ subscription.start_date }}</td>
+            <td>{{ subscription.end_date }}</td>
+            <td>{{ subscription.monthly_fee }}</td>
+            <td>{{ subscription.is_active|yesno:"Sim,Não" }}</td>
+            <td>
+                <a href="{% url 'edit_subscription' subscription.pk %}"><button>Editar</button></a>
+                <a href="{% url 'delete_subscription' subscription.pk %}"><button>Excluir</button></a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8">Nenhuma assinatura cadastrada.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

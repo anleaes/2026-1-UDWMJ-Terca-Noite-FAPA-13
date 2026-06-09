@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Vagas{% endblock %}
+
+{% block content %}
+<h1>Vagas</h1>
+<p>
+    <a href="{% url 'add_parking_spot' %}"><button>Adicionar Vaga</button></a>
+    <a href="{% url 'list_subscriptions' %}"><button>Assinaturas</button></a>
+</p>
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Número</th>
+            <th>Coberta</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for spot in spots %}
+        <tr>
+            <td>{{ spot.id }}</td>
+            <td>{{ spot.number }}</td>
+            <td>{{ spot.is_covered|yesno:"Sim,Não" }}</td>
+            <td>{{ spot.status }}</td>
+            <td>
+                <a href="{% url 'edit_parking_spot' spot.pk %}"><button>Editar</button></a>
+                <a href="{% url 'delete_parking_spot' spot.pk %}"><button>Excluir</button></a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Nenhuma vaga cadastrada.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

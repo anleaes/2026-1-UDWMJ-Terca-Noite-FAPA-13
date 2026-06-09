@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Pedido Finalizado{% endblock %}
+
+{% block content %}
+<h1>Pedido Finalizado</h1>
+<table border="1">
+    <tr>
+        <td>Ordem</td>
+        <td>{{ order.id }}</td>
+    </tr>
+    <tr>
+        <td>Cliente</td>
+        <td>{{ order.customer }}</td>
+    </tr>
+    <tr>
+        <td>Veículo</td>
+        <td>{{ order.vehicle }}</td>
+    </tr>
+    <tr>
+        <td>Vaga</td>
+        <td>{{ order.parking_spot }}</td>
+    </tr>
+    <tr>
+        <td>Entrada</td>
+        <td>{{ order.entry_time }}</td>
+    </tr>
+    <tr>
+        <td>Saída</td>
+        <td>{{ order.exit_time }}</td>
+    </tr>
+    <tr>
+        <td>Tempo</td>
+        <td>{{ total_minutes }} minuto(s)</td>
+    </tr>
+    <tr>
+        <td>Estacionamento</td>
+        <td>R$ {{ parking_subtotal }}</td>
+    </tr>
+    <tr>
+        <td>Total</td>
+        <td>R$ {{ order.total }}</td>
+    </tr>
+</table>
+<h2>Itens</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Serviço</th>
+            <th>Quantidade</th>
+            <th>Preço Unitário</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order.items.all %}
+        <tr>
+            <td>{{ item.service_category.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>R$ {{ item.unit_price }}</td>
+            <td>R$ {{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p>
+    <a href="{% url 'view_invoice' invoice.pk %}"><button>Ver Nota Fiscal</button></a>
+    <a href="{% url 'list_items' %}"><button>Novo Atendimento</button></a>
+</p>
+{% endblock %}
