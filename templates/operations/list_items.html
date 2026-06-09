@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Caixa{% endblock %}
+
+{% block content %}
+<h1>Caixa</h1>
+
+<h2>Vagas Ocupadas</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Vaga</th>
+            <th>Coberta</th>
+            <th>Tempo Ocupada</th>
+            <th>Minutos</th>
+            <th>Valor Estimado</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in occupied_spots %}
+        <tr>
+            <td>{{ item.spot.number }}</td>
+            <td>{{ item.spot.is_covered|yesno:"Sim,Não" }}</td>
+            <td>
+                {% if item.occupancy %}
+                {{ item.occupancy.display }}
+                {% else %}
+                -
+                {% endif %}
+            </td>
+            <td>
+                {% if item.occupancy %}
+                {{ item.occupancy.total_minutes }}
+                {% else %}
+                -
+                {% endif %}
+            </td>
+            <td>
+                {% if item.occupancy %}
+                R$ {{ item.occupancy.estimated_cost }}
+                {% else %}
+                -
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'cart' %}?spot_id={{ item.spot.id }}"><button>Finalizar</button></a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr class="empty-message">
+            <td colspan="6">Nenhuma vaga ocupada.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p class="info-text">Tarifa: R$ {{ parking_rate }} por minuto</p>
+
+<h2>Serviços Adicionais</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Preço Base</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+        <tr>
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td>{{ category.base_price }}</td>
+            <td>
+                <form method="post" action="{% url 'add_to_cart' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="category_id" value="{{ category.id }}">
+                    <input type="number" name="quantity" value="1" min="1" class="qty-input">
+                    <button type="submit">Adicionar</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr class="empty-message">
+            <td colspan="4">Nenhum serviço cadastrado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="page-actions">
+    <a href="{% url 'cart' %}"><button type="button">Carrinho</button></a>
+</div>
+{% endblock %}

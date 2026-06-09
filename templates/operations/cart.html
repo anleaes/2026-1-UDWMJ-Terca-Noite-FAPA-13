@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Finalizar{% endblock %}
+
+{% block content %}
+<h1>Finalizar</h1>
+<div class="page-actions">
+    <a href="{% url 'list_items' %}"><button type="button">Voltar</button></a>
+</div>
+
+{% if spot %}
+<h2>Vaga {{ spot.number }}</h2>
+<table>
+    <tr>
+        <td>Entrada</td>
+        <td>{{ spot.occupied_since }}</td>
+    </tr>
+    <tr>
+        <td>Tempo Ocupada</td>
+        <td>{{ occupancy.display }}</td>
+    </tr>
+    <tr>
+        <td>Minutos</td>
+        <td>{{ occupancy.total_minutes }}</td>
+    </tr>
+    <tr>
+        <td>Estacionamento</td>
+        <td>R$ {{ occupancy.estimated_cost }} (R$ {{ parking_rate }}/min)</td>
+    </tr>
+</table>
+
+<h2>Serviços Adicionais</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Serviço</th>
+            <th>Quantidade</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart_items %}
+        <tr>
+            <td>{{ item.category.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.subtotal }}</td>
+        </tr>
+        {% empty %}
+        <tr class="empty-message">
+            <td colspan="3">Nenhum serviço adicional.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    {% if cart_items %}
+    <tfoot>
+        <tr>
+            <td colspan="2">Total Serviços</td>
+            <td>{{ total }}</td>
+        </tr>
+    </tfoot>
+    {% endif %}
+</table>
+
+<h2>Confirmar Saída</h2>
+<form method="post" action="{% url 'checkout' %}">
+    {% csrf_token %}
+    <input type="hidden" name="parking_spot_id" value="{{ spot.id }}">
+    <table>
+        <tr>
+            <td><label for="customer_id">Cliente</label></td>
+            <td>
+                <select name="customer_id" id="customer_id" required>
+                    <option value="">Selecione</option>
+                    {% for customer in customers %}
+                    <option value="{{ customer.id }}">{{ customer }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="vehicle_id">Veículo</label></td>
+            <td>
+                <select name="vehicle_id" id="vehicle_id" required>
+                    <option value="">Selecione</option>
+                    {% for vehicle in vehicles %}
+                    <option value="{{ vehicle.id }}">{{ vehicle.license_plate }} - {{ vehicle.model }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Total Estimado</td>
+            <td>R$ {{ occupancy.estimated_cost|add:total }}</td>
+        </tr>
+    </table>
+    <button type="submit">Finalizar e Cobrar</button>
+</form>
+{% else %}
+<p>Selecione uma vaga ocupada no caixa para finalizar.</p>
+{% endif %}
+{% endblock %}
