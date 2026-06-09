@@ -4,11 +4,11 @@
 
 {% block content %}
 <h1>Clientes</h1>
-<p>
-    <a href="{% url 'add_customer' %}"><button>Adicionar</button></a>
-    <a href="{% url 'search_customers' %}"><button>Buscar</button></a>
-</p>
-<table border="1">
+<div class="page-actions">
+    <a href="{% url 'add_customer' %}"><button type="button">Adicionar</button></a>
+    <a href="{% url 'search_customers' %}"><button type="button">Buscar</button></a>
+</div>
+<table>
     <thead>
         <tr>
             <th>ID</th>
@@ -37,7 +37,7 @@
             </td>
         </tr>
         {% empty %}
-        <tr>
+        <tr class="empty-message">
             <td colspan="8">Nenhum cliente cadastrado.</td>
         </tr>
         {% endfor %}

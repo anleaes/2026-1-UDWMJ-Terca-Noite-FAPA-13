@@ -4,5 +4,20 @@
 
 {% block content %}
 <h1>Bem-vindo ao Estacionamento</h1>
-<p>Sistema de gerenciamento de estacionamento.</p>
+<p class="info-text">Sistema de gerenciamento de estacionamento — clientes, vagas, caixa e notas fiscais.</p>
+
+<div class="home-grid">
+    <a class="home-card" href="{% url 'list_customers' %}">
+        <h2>Clientes</h2>
+        <p>Cadastrar, editar e buscar clientes.</p>
+    </a>
+    <a class="home-card" href="{% url 'list_parking_spots' %}">
+        <h2>Vagas</h2>
+        <p>Gerenciar vagas e assinaturas mensais.</p>
+    </a>
+    <a class="home-card" href="{% url 'list_items' %}">
+        <h2>Caixa</h2>
+        <p>Finalizar estacionamento e serviços.</p>
+    </a>
+</div>
 {% endblock %}

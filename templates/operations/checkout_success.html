@@ -4,7 +4,7 @@
 
 {% block content %}
 <h1>Pedido Finalizado</h1>
-<table border="1">
+<table>
     <tr>
         <td>Ordem</td>
         <td>{{ order.id }}</td>
@@ -43,7 +43,7 @@
     </tr>
 </table>
 <h2>Itens</h2>
-<table border="1">
+<table>
     <thead>
         <tr>
             <th>Serviço</th>
@@ -63,8 +63,8 @@
         {% endfor %}
     </tbody>
 </table>
-<p>
-    <a href="{% url 'view_invoice' invoice.pk %}"><button>Ver Nota Fiscal</button></a>
-    <a href="{% url 'list_items' %}"><button>Novo Atendimento</button></a>
-</p>
+<div class="page-actions">
+    <a href="{% url 'view_invoice' invoice.pk %}"><button type="button">Ver Nota Fiscal</button></a>
+    <a href="{% url 'list_items' %}"><button type="button">Novo Atendimento</button></a>
+</div>
 {% endblock %}

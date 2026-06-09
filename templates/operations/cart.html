@@ -4,11 +4,13 @@
 
 {% block content %}
 <h1>Finalizar</h1>
-<p><a href="{% url 'list_items' %}"><button>Voltar</button></a></p>
+<div class="page-actions">
+    <a href="{% url 'list_items' %}"><button type="button">Voltar</button></a>
+</div>
 
 {% if spot %}
 <h2>Vaga {{ spot.number }}</h2>
-<table border="1">
+<table>
     <tr>
         <td>Entrada</td>
         <td>{{ spot.occupied_since }}</td>
@@ -28,7 +30,7 @@
 </table>
 
 <h2>Serviços Adicionais</h2>
-<table border="1">
+<table>
     <thead>
         <tr>
             <th>Serviço</th>
@@ -44,7 +46,7 @@
             <td>{{ item.subtotal }}</td>
         </tr>
         {% empty %}
-        <tr>
+        <tr class="empty-message">
             <td colspan="3">Nenhum serviço adicional.</td>
         </tr>
         {% endfor %}
@@ -63,7 +65,7 @@
 <form method="post" action="{% url 'checkout' %}">
     {% csrf_token %}
     <input type="hidden" name="parking_spot_id" value="{{ spot.id }}">
-    <table border="1">
+    <table>
         <tr>
             <td><label for="customer_id">Cliente</label></td>
             <td>

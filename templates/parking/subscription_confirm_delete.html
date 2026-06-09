@@ -4,10 +4,12 @@
 
 {% block content %}
 <h1>Excluir Assinatura</h1>
-<p>Deseja excluir a assinatura de {{ subscription.customer }}?</p>
+<div class="confirm-box">
+    <p>Deseja excluir a assinatura de <strong>{{ subscription.customer }}</strong>?</p>
+</div>
 <form method="post">
     {% csrf_token %}
-    <button type="submit">Confirmar</button>
+    <button type="submit" class="btn-danger">Confirmar</button>
     <a href="{% url 'list_subscriptions' %}"><button type="button">Cancelar</button></a>
 </form>
 {% endblock %}

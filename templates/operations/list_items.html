@@ -6,7 +6,7 @@
 <h1>Caixa</h1>
 
 <h2>Vagas Ocupadas</h2>
-<table border="1">
+<table>
     <thead>
         <tr>
             <th>Vaga</th>
@@ -48,16 +48,16 @@
             </td>
         </tr>
         {% empty %}
-        <tr>
+        <tr class="empty-message">
             <td colspan="6">Nenhuma vaga ocupada.</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<p>Tarifa: R$ {{ parking_rate }} por minuto</p>
+<p class="info-text">Tarifa: R$ {{ parking_rate }} por minuto</p>
 
 <h2>Serviços Adicionais</h2>
-<table border="1">
+<table>
     <thead>
         <tr>
             <th>ID</th>
@@ -76,17 +76,19 @@
                 <form method="post" action="{% url 'add_to_cart' %}">
                     {% csrf_token %}
                     <input type="hidden" name="category_id" value="{{ category.id }}">
-                    <input type="number" name="quantity" value="1" min="1">
+                    <input type="number" name="quantity" value="1" min="1" class="qty-input">
                     <button type="submit">Adicionar</button>
                 </form>
             </td>
         </tr>
         {% empty %}
-        <tr>
+        <tr class="empty-message">
             <td colspan="4">Nenhum serviço cadastrado.</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<p><a href="{% url 'cart' %}"><button>Carrinho</button></a></p>
+<div class="page-actions">
+    <a href="{% url 'cart' %}"><button type="button">Carrinho</button></a>
+</div>
 {% endblock %}

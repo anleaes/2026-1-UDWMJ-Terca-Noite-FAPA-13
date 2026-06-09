@@ -4,14 +4,14 @@
 
 {% block content %}
 <h1>Buscar Clientes</h1>
-<form method="get">
+<form method="get" class="search-form">
     <label for="q">Sobrenome:</label>
     <input type="text" name="q" id="q" value="{{ query }}">
     <button type="submit">Buscar</button>
+    <a href="{% url 'list_customers' %}"><button type="button">Voltar</button></a>
 </form>
-<p><a href="{% url 'list_customers' %}"><button>Voltar</button></a></p>
 {% if query %}
-<table border="1">
+<table>
     <thead>
         <tr>
             <th>ID</th>
@@ -40,7 +40,7 @@
             </td>
         </tr>
         {% empty %}
-        <tr>
+        <tr class="empty-message">
             <td colspan="8">Nenhum cliente encontrado.</td>
         </tr>
         {% endfor %}

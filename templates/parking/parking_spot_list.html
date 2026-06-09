@@ -4,11 +4,11 @@
 
 {% block content %}
 <h1>Vagas</h1>
-<p>
-    <a href="{% url 'add_parking_spot' %}"><button>Adicionar Vaga</button></a>
-    <a href="{% url 'list_subscriptions' %}"><button>Assinaturas</button></a>
-</p>
-<table border="1">
+<div class="page-actions">
+    <a href="{% url 'add_parking_spot' %}"><button type="button">Adicionar Vaga</button></a>
+    <a href="{% url 'list_subscriptions' %}"><button type="button">Assinaturas</button></a>
+</div>
+<table>
     <thead>
         <tr>
             <th>ID</th>
@@ -31,7 +31,7 @@
             </td>
         </tr>
         {% empty %}
-        <tr>
+        <tr class="empty-message">
             <td colspan="5">Nenhuma vaga cadastrada.</td>
         </tr>
         {% endfor %}
